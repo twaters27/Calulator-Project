@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style> 
+    
+    
+    
+    
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+    <div class="container">
+        <div class ="parent p3">
+           <p id="result"> Result: </p>
+            <input type="text" id="display" maxLength="10" disabled>
+        
+     <!--    <button id="equal-sign" type="button">=</button> -->
+        
+        
+     </div>
+        
+        <div id="buttons1" class= "parent p1 flex ">
+     <!--       <button class="number-buttons input-button">0</button>
+           <button class="number-buttons input-button">1</button>
+           <button class="number-buttons input-button">2</button>
+           <button class="number-buttons input-button">3</button>
+           <button class="number-buttons input-button">4</button>
+           <button class="number-buttons input-button">5</button>
+           <button class="number-buttons input-button">6</button>
+           
+           <button class="number-buttons input-button">7</button>
+           <button class="number-buttons input-button">8</button>
+           <button class="number-buttons input-button">9</button> -->
+           <button class="operator number-buttons input-button" id="equal" type="button">=</button>
+        </div>
+        
+        <div id="buttons2" class = "parent p2 flex">
+           <button class="operator side-buttons input-button" id="clear" type="button">C</button>
+           <button id ="add" class = " operator side-buttons input-button" type="button">+</button>
+        <button id ="minus" class = "operator side-buttons input-button" type="button">-</button>
+     <button id ="multiply" class = " operator side-buttons input-button" type="button">X</button>
+     <button id ="divide" class = " operator side-buttons input-button" type="button">/</button>
+        
+     </div>
+     
+             
+     <!-- <div class ="parent p3 flex"> -->
+        
+       
+        
+     <!-- </div> -->
+     
+     </div>
+        
+        
+        
+        
+        
+     </div>
+    
+
+
+
+
+
+
+<script>
+    const calculator = document.getElementById("container");
+const resultDisplay = document.getElementById("display");
+const buttons1 = document.getElementById("buttons1");
+const clearButton = document.getElementById("clear");
+const equalButton = document.getElementById("equal");
+const addButton = document.getElementById("add");
+const minusButton = document.getElementById("subtract");
+const divideButton = document.getElementById("divide");
+const multiplyButton = document.getElementById("multiply");
+let maxLength = resultDisplay.getAttribute("maxLength");
+resultDisplay.value = "0";
+
+let tempNumber = null;
+let firstNumber = null;
+let secondNumber = null;
+let operation = null;
+let result = null;
+
+function clearAfter(){
+tempNumber = null;
+   firstNumber = null;
+   secondNumber = null;
+   operation = null;
+   
+}
+
+
+for (let i = 0; i < 10; i++) {
+  // console.log("i is" + i);
+     const button = document.createElement("button");
+   button.type ="button";
+    button.classList.add('number-buttons');
+  button.classList.add('input-buttons');
+  button.textContent = i;
+   button.setAttribute("data-value", i);
+   // console.log(button);
+  if(i === 0) {
+    button.style.order = 1;
+  }
+   buttons1.appendChild(button);
+   
+
+}
+
+const numberButtons = document.querySelectorAll(".number-buttons");
+
+
+numberButtons.forEach((button, index) => {
+  let dataValue = parseInt(button.getAttribute("data-value"));
+   
+   button.addEventListener('click', function(event) {
+      if(resultDisplay.value.length < maxLength){
+         if(operation === null){
+            if (firstNumber === null || firstNumber === 0) {
+               firstNumber = dataValue;
+
+            } else {
+               firstNumber = parseInt(firstNumber.toString().concat(dataValue));
+            }
+            resultDisplay.value = firstNumber.toString();
+         } else {
+            if (secondNumber === null || secondNumber === 0){
+               secondNumber = dataValue;
+} else {
+   secondNumber = parseInt(secondNumber.toString().concat(dataValue));
+} resultDisplay.value = secondNumber.toString();
+         }
+
+         
+      
+    
+    
+    }
+     
+    
+    
+  })
+});
+
+function clearValues() {
+  tempNumber = null;
+  firstNumber = null;
+  secondNumber = null;
+  result = null;
+  operation = null;
+  resultDisplay.value = 0;
+  
+
+}
+
+clearButton.addEventListener('click', function(event) {
+   clearValues();
+   
+   
+
+
+})
+
+const operatorButtons = document.querySelectorAll('.operator');
+
+
+operatorButtons.forEach(button =>{
+   console.log(button);
+   
+    button.addEventListener('click', function(event) {
+       // console.log(event);
+       
+       const thisOperation = event.target.id;
+       console.log(thisOperation);
+       
+       if (firstNumber !== null && secondNumber === null){
+          switch(thisOperation){
+                case  "add":
+                operation = "+";
+                break;
+                case  "minus":
+                operation = "-";
+                break;
+             case "multiply":
+                operation = "X";
+                break;
+             case "divide":
+                operation = "/";
+                break;
+                
+
+          }
+          resultDisplay.value = operation;
+       }
+       
+       
+    });
+});
+
+equalButton.addEventListener("click", function(event){
+   if(secondNumber !== null) {
+      switch (operation) {
+         case "+":
+            result = firstNumber + secondNumber;
+            clearAfter();
+            break;
+         case "-":
+            result = firstNumber - secondNumber;
+            clearAfter();
+            break;
+         case "X":
+            result = firstNumber * secondNumber;
+            clearAfter();
+            break;
+            
+         case "/":
+            result = firstNumber / secondNumber;
+            clearAfter();
+            break;
+            
+            
+      }
+      resultDisplay.value = result;
+      
+      
+   }
+})
+
+
+
+   
+   
+
+
+    </script>
+</body>
+</html>
